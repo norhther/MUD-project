@@ -1,0 +1,40 @@
+Cuando ejecutamos python langdetect.py -i ../data/dataset.csv -v 1000 -a char:
+
+Dutch missclassified as english (42) & Latin as english
+Number of tokens in the vocabulary: 1000
+Coverage:  0.9808517331929401
+========
+Prediction Results:
+F1: 0.9552272727272727 (micro), 0.9578334706797794 (macro), 0.9574109803676452 (weighted)
+========
+========
+PCA and Explained Variance:
+Variance explained by PCA: [0.3131436  0.13806745]
+
+
+Cuando ejectuamos ... word
+Split sizes:
+Train: 17600
+Test: 4400
+========
+Number of tokens in the vocabulary: 1000
+Coverage:  0.25771498027437495
+========
+========
+Prediction Results:
+F1: 0.8920454545454546 (micro), 0.881225725511312 (macro), 0.8845797399266582 (weighted)
+========
+========
+PCA and Explained Variance:
+Variance explained by PCA: [0.07878438 0.03638186]
+
+Vemos que el coverage es mucho menor, de ahí que las predicciones sean peores
+
+
+
+omw-1.4
+
+pocas palabras de algunos idiomas??
+vocabulario pequeño (1000)
+PCA clustering
+conf_matrix sueco chino koreano japones...? pocos ejemplos
