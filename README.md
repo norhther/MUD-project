@@ -71,3 +71,21 @@ done
 ```
 
 This script launches the `langdetect.py` script with different configurations for the `vocabulary-size`, `analyzer`, `classifier`, and `ngram-range` parameters. It generates output files for each experiment if the `-o` flag is set.
+
+
+## `experimentsToPandas.py`
+
+This script reads all text files in the output directory and extracts information from their filenames and contents to create a pandas dataframe. Each text file should contain information on the performance of a classifier in the language detection task. 
+The resulting pandas dataframe will have the following columns:
+
+-   `Classifier`: The name of the classifier used.
+-   `Kind`: The kind of input used (either "char" or "word").
+-   `Vocabulary Size`: The size of the vocabulary used.
+-   `Ngram 1`: The first integer specifying the n-gram range used.
+-   `Ngram 2`: The second integer specifying the n-gram range used.
+-   `Coverage`: The coverage score for the classifier on the language detection task.
+-   `F1 (micro)`: The micro-averaged F1 score for the classifier on the language detection task.
+-   `F1 (macro)`: The macro-averaged F1 score for the classifier on the language detection task.
+-   `F1 (weighted)`: The weighted F1 score for the classifier on the language detection task.
+
+The resulting dataframe is sorted by `F1 (weighted)` and `Coverage` in descending order, and is saved to a csv file at `../output/results.csv`.
