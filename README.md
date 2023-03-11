@@ -1,4 +1,5 @@
 # MUD-project
+![Thank you image](https://www.rosette.com/wp-content/uploads/2014/11/thankyou.jpg)
 This project contains a text classifier that can be used to classify text into the corresponding language .
 It uses different classifiers, such as k-nearest neighbors (KNN), support vector machine (SVM), random forest, and naive Bayes to perform the classification.
 
