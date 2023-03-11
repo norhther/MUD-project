@@ -14,7 +14,8 @@ import pandas as pd
 def compute_features(X_train, 
                      X_test, 
                      analyzer='char', 
-                     max_features=None):
+                     max_features=None,
+                     ngram_range=(1,1)):
   '''
   Task: Compute a matrix of token counts given a corpus. 
         This matrix represents the frecuency any pair of tokens appears
@@ -33,7 +34,7 @@ def compute_features(X_train,
   
   unigramVectorizer = CountVectorizer(analyzer=analyzer,
                                       max_features=max_features,
-                                      ngram_range=(1,1))
+                                      ngram_range=ngram_range)
   
   X_unigram_train_raw = unigramVectorizer.fit_transform(X_train)
   X_unigram_test_raw = unigramVectorizer.transform(X_test)
@@ -42,7 +43,7 @@ def compute_features(X_train,
     
 
 
-def compute_coverage(features, split, analyzer='char'):
+def compute_coverage(features, split, analyzer='char', output_file=None):
   '''
   Task: Compute the proportion of a corpus that is represented by
         the vocabulary. All non covered tokens will be considered as unknown
@@ -63,6 +64,9 @@ def compute_coverage(features, split, analyzer='char'):
     for token in sent:
       if token in features:
         found += 1.0
+  if output_file:
+    with open(output_file, 'a') as f:
+      f.write('Coverage: ' + str(found/total))
   return found / total
 
 # Utils for conversion of different sources into numpy array
@@ -98,7 +102,7 @@ def normalizeData(train, test):
     return train_result, test_result
 
 
-def plot_F_Scores(y_test, y_predict):
+def plot_F_Scores(y_test, y_predict, output_file=None):
     '''
     Task: Compute the F1 score of a set of predictions given
           its reference
@@ -112,8 +116,11 @@ def plot_F_Scores(y_test, y_predict):
     f1_macro = f1_score(y_test, y_predict, average='macro')
     f1_weighted = f1_score(y_test, y_predict, average='weighted')
     print("F1: {} (micro), {} (macro), {} (weighted)".format(f1_micro, f1_macro, f1_weighted))
+    if output_file:
+        with open(output_file, 'a') as f:
+            f.write("\nF1: {} (micro), {} (macro), {} (weighted)".format(f1_micro, f1_macro, f1_weighted))
 
-def plot_Confusion_Matrix(y_test, y_predict, color="Blues"):
+def plot_Confusion_Matrix(y_test, y_predict, color="Blues", output_file=None):
     '''
     Task: Given a set of reference and predicted labels plot its confussion matrix
     
@@ -133,10 +140,15 @@ def plot_Confusion_Matrix(y_test, y_predict, color="Blues"):
     sn.set(font_scale=0.8) # for label size
     sn.set(rc={'figure.figsize':(15, 15)})
     sn.heatmap(df_cm, cmap=color, annot=True, annot_kws={"size": 12}, fmt='g')# font size
-    plt.show()
+    if output_file:
+        plt.savefig(output_file)
+        plt.clf()
+    else:
+        plt.show()
 
 
-def plotPCA(x_train, x_test,y_test, langs):
+
+def plotPCA(x_train, x_test,y_test, langs, output_file=None):
     '''
     Task: Given train features train a PCA dimensionality reduction
           (2 dimensions) and plot the test set according to its labels.
@@ -160,7 +172,11 @@ def plotPCA(x_train, x_test,y_test, langs):
         pca_y = np.asarray([i[1] for i in pca_test])[y_test_list == lang]
         plt.scatter(pca_x,pca_y, label=lang)
     plt.legend(loc="upper left")
-    plt.show()
+    if output_file:
+        plt.savefig(output_file)
+        plt.clf()
+    else:
+        plt.show()
 
 
 
